@@ -37,11 +37,11 @@ set n4 [$ns node]
 set n5 [$ns node]
 
 #Create links between the nodes
-$ns duplex-link $n0 $n1 2Mb 10ms DropTail
-$ns duplex-link $n1 $n2 2Mb 10ms DropTail
-$ns duplex-link $n2 $n3 2Mb 10ms DropTail
-$ns duplex-link $n4 $n1 2Mb 10ms DropTail
-$ns duplex-link $n2 $n5 2Mb 10ms DropTail
+$ns duplex-link $n0 $n1 .1Mb 10ms DropTail
+$ns duplex-link $n1 $n2 .1Mb 10ms DropTail
+$ns duplex-link $n2 $n3 .1Mb 10ms DropTail
+$ns duplex-link $n4 $n1 .1Mb 10ms DropTail
+$ns duplex-link $n2 $n5 .1Mb 10ms DropTail
 
 
 #Give node position (for NAM)
