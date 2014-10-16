@@ -43,7 +43,6 @@ $ns duplex-link $n2 $n3 10Mb 10ms DropTail
 $ns duplex-link $n4 $n1 10Mb 10ms DropTail
 $ns duplex-link $n2 $n5 10Mb 10ms DropTail
 
-
 #Give node position (for NAM)
 $ns duplex-link-op $n0 $n1 orient right-down
 $ns duplex-link-op $n4 $n1 orient right-up
