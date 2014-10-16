@@ -2,9 +2,15 @@
 
 from optparse import OptionParser
 
+def write_to_file(data):
+  f = open('data.dat', 'w+')
+  for time in data:
+    f.write(str(time) + "\t" + str(data[time]) + "\n")
+
 def parse(out_file):
   drops_from_1_to_2 = 0
   bytes_received = 0
+  current_bytes_received = 0
   start_time = None
   end_time = None
   interval_size = .1
@@ -32,19 +38,21 @@ def parse(out_file):
       if start_time == None:
         start_time = data['time']
     elif data['event'] == 'r' and data['from_node'] == '1' and data['to_node'] == '2':
-      bytes_received += int(data['packet_size'])
+      current_bytes_received = int(data['packet_size'])
+      bytes_received += current_bytes_received
       time = float(data['time'])
       seconds = int(str(time).split(".")[0])
       time_interval = int(data['time'].split('.')[1][0]) + (10 * seconds)
       if time_interval in recieved_packets:
-        recieved_packets[time_interval] += bytes_received
+        recieved_packets[time_interval] += current_bytes_received
       else:
-        recieved_packets[time_interval] = bytes_received
+        recieved_packets[time_interval] = current_bytes_received
       #print time_interval
       print str(time) + "\t" + str(time_interval) 
       end_time = data['time']
 
   print recieved_packets
+  write_to_file(recieved_packets)
   print "Received " + str(bytes_received) + " bytes"
   print "Throuput is " + str((bytes_received/(float(end_time)-float(start_time)))) + " bytes/second"
   print "Dropped " + str(drops_from_1_to_2) + " packets"
