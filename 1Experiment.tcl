@@ -37,11 +37,11 @@ set n4 [$ns node]
 set n5 [$ns node]
 
 #Create links between the nodes
-$ns duplex-link $n0 $n1 2Mb 10ms DropTail
-$ns duplex-link $n1 $n2 2Mb 10ms DropTail
-$ns duplex-link $n2 $n3 2Mb 10ms DropTail
-$ns duplex-link $n4 $n1 2Mb 10ms DropTail
-$ns duplex-link $n2 $n5 2Mb 10ms DropTail
+$ns duplex-link $n0 $n1 10Mb 10ms DropTail
+$ns duplex-link $n1 $n2 10Mb 10ms DropTail
+$ns duplex-link $n2 $n3 10Mb 10ms DropTail
+$ns duplex-link $n4 $n1 10Mb 10ms DropTail
+$ns duplex-link $n2 $n5 10Mb 10ms DropTail
 
 
 #Give node position (for NAM)
@@ -78,7 +78,7 @@ set cbr [new Application/Traffic/CBR]
 $cbr attach-agent $udp
 $cbr set type_ CBR
 $cbr set packet_size_ 1000
-$cbr set rate_ 1mb
+$cbr set rate_ 10mb
 $cbr set random_ false
 
 #Setup a FTP over TCP Connection
@@ -87,7 +87,7 @@ $ftp attach-agent $tcp
 
 #Schedule events for the CBR and FTP agents
 $ns at 0.1 "$cbr start"
-$ns at 1.0 "$ftp start"
+$ns at 0.5 "$ftp start"
 $ns at 4.0 "$ftp stop"
 $ns at 4.5 "$cbr stop"
 
