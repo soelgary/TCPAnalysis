@@ -15,6 +15,12 @@ def get_latency(recieved, sent):
     latency[int(seq_num)] = time
   return latency
 
+def normalize_seq_num(recieved):
+  acc = {}
+  for seq_num in recieved:
+    acc[float(recieved[seq_num])] = int(seq_num) 
+  return acc
+
 def normalize_time(throughput):
   normalized = {}
   for time in throughput:
@@ -49,12 +55,12 @@ def parse(out_file):
     data['dest_addr'] = split[9]
     data['seq_num'] =split[10]
     data['packet_id'] = split[11]
-    if data['event'] == 'd':
+    if data['event'] == 'd' and data['packet_type'] == 'tcp':
       drops_from_1_to_2 += 1
       dropped_packets[data['time']] = data['packet_size']
-    elif data['event'] == '+' :
+    elif data['event'] == '+' and data['packet_type'] == 'tcp':
       sequence_numbers_sent[data['seq_num']] = data['time']
-    elif data['event'] == 'r':
+    elif data['event'] == 'r' and data['packet_type'] == 'tcp':
       sequence_numbers_received[data['seq_num']] = data['time']
       current_bytes_received = int(data['packet_size'])
       bytes_received += current_bytes_received
@@ -70,6 +76,7 @@ def parse(out_file):
       end_time = data['time']
 
   #print recieved_packets
+  write_to_file(normalize_seq_num(sequence_numbers_received), "received.dat")
   write_to_file(normalize_time(recieved_packets), "throuput.dat")
   write_to_file(dropped_packets, "dropped.dat")
   write_to_file(get_latency(sequence_numbers_received, sequence_numbers_sent), "latency.dat")
