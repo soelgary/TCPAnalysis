@@ -1,0 +1,7 @@
+set terminal png
+
+set output 'throughput.png'
+plot "throuput.dat" with line
+
+set output "latency.png"
+plot "latency.dat" with line
