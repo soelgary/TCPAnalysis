@@ -2,10 +2,17 @@
 
 from optparse import OptionParser
 
-def write_to_file(data):
-  f = open('data.dat', 'w+')
-  for time in data:
+def write_to_file(data, filename):
+  f = open(filename, 'w+')
+  for time in sorted(data):
     f.write(str(time) + "\t" + str(data[time]) + "\n")
+
+def get_latency(recieved, sent):
+  latency = {}
+  for seq_num in recieved:
+    time = str(float(recieved[seq_num]) - float(sent[seq_num]))
+    latency[time] = seq_num
+  return latency
 
 def parse(out_file):
   drops_from_1_to_2 = 0
@@ -15,6 +22,9 @@ def parse(out_file):
   end_time = None
   interval_size = .1
   recieved_packets = {}
+  dropped_packets = {}
+  sequence_numbers_sent = {}
+  sequence_numbers_received = {}
   for line in open(out_file):
     #print line
     split =  line.replace('\n', '').split(' ')
@@ -32,12 +42,13 @@ def parse(out_file):
     data['dest_addr'] = split[9]
     data['seq_num'] =split[10]
     data['packet_id'] = split[11]
-    if data['event'] == 'd' and data['from_node'] == '1' and data['to_node'] == '2':
+    if data['event'] == 'd':
       drops_from_1_to_2 += 1
-    elif data['event'] == '+' and data['from_node'] == '1' and data['to_node'] == '2':
-      if start_time == None:
-        start_time = data['time']
-    elif data['event'] == 'r' and data['from_node'] == '1' and data['to_node'] == '2':
+      dropped_packets[data['time']] = data['packet_size']
+    elif data['event'] == '+' :
+      sequence_numbers_sent[data['seq_num']] = data['time']
+    elif data['event'] == 'r':
+      sequence_numbers_received[data['seq_num']] = data['time']
       current_bytes_received = int(data['packet_size'])
       bytes_received += current_bytes_received
       time = float(data['time'])
@@ -52,9 +63,11 @@ def parse(out_file):
       end_time = data['time']
 
   print recieved_packets
-  write_to_file(recieved_packets)
+  write_to_file(recieved_packets, "throuput.dat")
+  write_to_file(dropped_packets, "dropped.dat")
+  write_to_file(get_latency(sequence_numbers_received, sequence_numbers_sent), "latency.dat")
   print "Received " + str(bytes_received) + " bytes"
-  print "Throuput is " + str((bytes_received/(float(end_time)-float(start_time)))) + " bytes/second"
+  #print "Throuput is " + str((bytes_received/(float(end_time)-float(start_time)))) + " bytes/second"
   print "Dropped " + str(drops_from_1_to_2) + " packets"
 
 
