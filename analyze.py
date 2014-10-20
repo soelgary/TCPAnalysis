@@ -11,8 +11,15 @@ def get_latency(recieved, sent):
   latency = {}
   for seq_num in recieved:
     time = str(float(recieved[seq_num]) - float(sent[seq_num]))
-    latency[time] = seq_num
+    print sent[seq_num] + '\t' + recieved[seq_num] + '\t' + time
+    latency[int(seq_num)] = time
   return latency
+
+def normalize_time(throughput):
+  normalized = {}
+  for time in throughput:
+    normalized[float(time)/10] = throughput[time]
+  return normalized
 
 def parse(out_file):
   drops_from_1_to_2 = 0
@@ -59,11 +66,11 @@ def parse(out_file):
       else:
         recieved_packets[time_interval] = current_bytes_received
       #print time_interval
-      print str(time) + "\t" + str(time_interval) 
+      #print str(time) + "\t" + str(time_interval) 
       end_time = data['time']
 
-  print recieved_packets
-  write_to_file(recieved_packets, "throuput.dat")
+  #print recieved_packets
+  write_to_file(normalize_time(recieved_packets), "throuput.dat")
   write_to_file(dropped_packets, "dropped.dat")
   write_to_file(get_latency(sequence_numbers_received, sequence_numbers_sent), "latency.dat")
   print "Received " + str(bytes_received) + " bytes"
