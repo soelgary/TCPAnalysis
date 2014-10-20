@@ -34,27 +34,18 @@ def parse(out_file):
     data['packet_id'] = split[11]
     if data['event'] == 'd' and data['from_node'] == '1' and data['to_node'] == '2':
       drops_from_1_to_2 += 1
-    elif data['event'] == '+' and data['from_node'] == '1' and data['to_node'] == '2':
-      if start_time == None:
-        start_time = data['time']
-    elif data['event'] == 'r' and data['from_node'] == '1' and data['to_node'] == '2':
+    elif data['event'] == 'r' and data['from_node'] == '1' and data['to_node'] == '2' and data['packet_type'] == 'tcp':
       current_bytes_received = int(data['packet_size'])
       bytes_received += current_bytes_received
       time = float(data['time'])
-      seconds = int(str(time).split(".")[0])
-      time_interval = int(data['time'].split('.')[1][0]) + (10 * seconds)
-      if time_interval in recieved_packets:
-        recieved_packets[time_interval] += current_bytes_received
-      else:
-        recieved_packets[time_interval] = current_bytes_received
+      recieved_packets[time] = current_bytes_received
       #print time_interval
-      print str(time) + "\t" + str(time_interval) 
       end_time = data['time']
 
   print recieved_packets
   write_to_file(recieved_packets)
   print "Received " + str(bytes_received) + " bytes"
-  print "Throuput is " + str((bytes_received/(float(end_time)-float(start_time)))) + " bytes/second"
+  #print "Throuput is " + str((bytes_received/(float(end_time)-float(start_time)))) + " bytes/second"
   print "Dropped " + str(drops_from_1_to_2) + " packets"
 
 
