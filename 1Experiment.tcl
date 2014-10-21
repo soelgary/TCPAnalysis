@@ -1,3 +1,10 @@
+#Testing variables
+set bw 10Mbi
+set delay 10ms
+set cbrSize 10Mb
+
+
+
 #Create a simulator object
 set ns [new Simulator]
 
@@ -37,11 +44,11 @@ set n4 [$ns node]
 set n5 [$ns node]
 
 #Create links between the nodes
-$ns duplex-link $n0 $n1 10Mb 10ms DropTail
-$ns duplex-link $n1 $n2 10Mb 10ms DropTail
-$ns duplex-link $n2 $n3 10Mb 10ms DropTail
-$ns duplex-link $n4 $n1 10Mb 10ms DropTail
-$ns duplex-link $n2 $n5 10Mb 10ms DropTail
+$ns duplex-link $n0 $n1 $bw $delay DropTail
+$ns duplex-link $n1 $n2 $bw $delay DropTail
+$ns duplex-link $n2 $n3 $bw $delay DropTail
+$ns duplex-link $n4 $n1 $bw $delay DropTail
+$ns duplex-link $n2 $n5 $bw $delay DropTail
 
 #Give node position (for NAM)
 $ns duplex-link-op $n0 $n1 orient right-down
@@ -55,7 +62,7 @@ $ns duplex-link-op $n1 $n2 queuePos 0.5
 
 
 #Setup a TCP connection
-set tcp [new Agent/TCP]
+set tcp [new Agent/TCP/Reno]
 $tcp set class_ 2
 $ns attach-agent $n0 $tcp
 set sink [new Agent/TCPSink]
@@ -77,7 +84,7 @@ set cbr [new Application/Traffic/CBR]
 $cbr attach-agent $udp
 $cbr set type_ CBR
 $cbr set packet_size_ 1000
-$cbr set rate_ 10mb
+$cbr set rate_ $cbrSize
 $cbr set random_ false
 
 #Setup a FTP over TCP Connection
