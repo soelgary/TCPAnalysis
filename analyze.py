@@ -11,7 +11,10 @@ def get_latency(recieved, sent):
   latency = {}
   for seq_num in recieved:
     time = str(float(recieved[seq_num]) - float(sent[seq_num]))
-    print sent[seq_num] + '\t' + recieved[seq_num] + '\t' + time
+    #print time
+    if float(time) < 0:
+      print float(recieved[seq_num]), float(sent[seq_num])
+    #print sent[seq_num] + '\t' + recieved[seq_num] + '\t' + time
     latency[int(seq_num)] = time
   return latency
 
@@ -57,8 +60,8 @@ def parse(out_file):
     data['packet_id'] = split[11]
     if data['event'] == 'd' and data['packet_type'] == 'tcp':
       drops_from_1_to_2 += 1
-      dropped_packets[data['time']] = data['packet_size']
-    elif data['event'] == '+' and data['packet_type'] == 'tcp':
+      dropped_packets[data['time']] = 3#data['packet_size']
+    elif data['event'] == '+' and data['packet_type'] == 'tcp' and data['from_node'] == '0':
       sequence_numbers_sent[data['seq_num']] = data['time']
     elif data['event'] == 'r' and data['packet_type'] == 'tcp':
       sequence_numbers_received[data['seq_num']] = data['time']
@@ -74,10 +77,12 @@ def parse(out_file):
       #print time_interval
       #print str(time) + "\t" + str(time_interval) 
       end_time = data['time']
+    #elif data['event'] == 'r' and data['packet_type'] == 'ack':
+    #  sequence_numbers_received[data['seq_num']] = data['time']
 
   #print recieved_packets
-  write_to_file(normalize_seq_num(sequence_numbers_received), "received.dat")
-  write_to_file(normalize_time(recieved_packets), "throuput.dat")
+  write_to_file(normalize_seq_num(sequence_numbers_received), "received1.dat")
+  write_to_file(normalize_time(recieved_packets), "throuput3.dat")
   write_to_file(dropped_packets, "dropped.dat")
   write_to_file(get_latency(sequence_numbers_received, sequence_numbers_sent), "latency.dat")
   print "Received " + str(bytes_received) + " bytes"

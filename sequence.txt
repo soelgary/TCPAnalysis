@@ -1,0 +1,9 @@
+set term png
+set title 'Recieved Sequence Numbers For TCP Tahoe With 9Mb'
+set xlabel 'Time(s)'
+set ylabel 'Sequence Number'
+set output 'sequence.png'
+plot "received.dat" using 1:2 title "Reno", \
+  "received1.dat" using 1:2 title "New Reno", \
+  "received2.dat" using 1:2 title "Tahoe", \
+  "received3.dat" using 1:2 title "Vegas"

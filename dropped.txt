@@ -1,0 +1,9 @@
+set term png
+set title 'Dropped Packets Over Time With 10Mb'
+set ylabel 'TCP Implementation'
+set xlabel 'Time(s)'
+set output 'dropped.png'
+plot "dropped.dat" using 1:2 title "Reno", \
+  "dropped1.dat" using 1:2 title "New Reno", \
+  "dropped2.dat" using 1:2 title "Tahoe", \
+  "dropped3.dat" using 1:2 title "Vegas"
