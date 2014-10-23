@@ -1,0 +1,11 @@
+10Mb
+Reno 18
+New Reno 19
+Tahoe 20
+Vegas 18
+
+9Mb
+Reno 11
+New Reno 10
+Tahoe 12
+Vegas 0
