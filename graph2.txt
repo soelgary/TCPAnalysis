@@ -1,22 +1,29 @@
 set terminal png
 
-set title 'Throughput For TCP Reno vs Reno With 9Mb'
+set title 'Throughput For TCP Vegas vs Vegas With 9Mb'
 set ylabel 'Bytes Received'
 set xlabel 'Time(s)'
 set output 'throughput.png'
-plot "throughput1.dat" using 1:2 with line title "Reno From Node 0", \
-	"throughput2.dat" using 1:2 with line title "Reno From Node 4"
+plot "throughput1.dat" using 1:2 with line title "Vegas1", \
+	"throughput2.dat" using 1:2 with line title "Vegas2"
 
-set title 'Recieved Sequence Numbers For TCP Reno vs Reno With 9Mb'
+set title 'Latency For TCP Vegas vs Vegas With 9Mb'
+set ylabel 'RTT(s)'
+set xlabel 'Sequence Number'
+set output "latency.png"
+plot "latency1.dat" using 1:2 with line title "Vegas1", \
+  "latency2.dat" using 1:2 with line title "Vegas2"
+
+set title 'Recieved Sequence Numbers For TCP Vegas vs Vegas With 9Mb'
 set xlabel 'Time(s)'
 set ylabel 'Sequence Number'
 set output 'sequence.png'
-plot "sequence1.dat" using 1:2 title "Reno from Node 0", \
-	"sequence2.dat" using 1:2 title "Reno from Node 4"
+plot "sequence1.dat" using 1:2 title "Vegas1", \
+	"sequence2.dat" using 1:2 title "Vegas2"
 
 set title 'Dropped Packets Over Time With 9Mb'
 set ylabel 'TCP Implementation'
 set xlabel 'Time(s)'
 set output 'dropped.png'
-plot "dropped1.dat" using 1:2 title "Reno", \
-  "dropped2.dat" using 1:2 title "New Reno"
+plot "dropped1.dat" using 1:2 title "Vegas1", \
+  "dropped2.dat" using 1:2 title "Vegas2"

@@ -55,7 +55,7 @@ $ns duplex-link-op $n1 $n2 queuePos 0.5
 
 
 #Setup a TCP connection N1 -> N4 
-set tcp1 [new Agent/TCP]
+set tcp1 [new Agent/TCP/Vegas]
 $tcp1 set class_ 2
 $ns attach-agent $n0 $tcp1
 set sink [new Agent/TCPSink]
@@ -64,7 +64,7 @@ $ns connect $tcp1 $sink
 $tcp1 set fid_ 1
 
 #Setup a TCP connection N5 -> N6
-set tcp2 [new Agent/TCP]
+set tcp2 [new Agent/TCP/Vegas]
 $tcp2 set class_ 2
 $ns attach-agent $n4 $tcp2
 set sink [new Agent/TCPSink]
@@ -86,7 +86,7 @@ set cbr [new Application/Traffic/CBR]
 $cbr attach-agent $udp
 $cbr set type_ CBR
 $cbr set packet_size_ 1000
-$cbr set rate_ 10mb
+$cbr set rate_ 10Mb
 $cbr set random_ false
 
 #Setup a FTP over iTCP Connection

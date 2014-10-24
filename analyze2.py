@@ -44,6 +44,8 @@ def parse(out_file):
   sent_packets2 = {}
   recieved_packets1 = {}
   recieved_packets2 = {}
+  recieved_bytes1 = {}
+  recieved_bytes2 = {}
   for line in open(out_file):
     #print line
     split =  line.replace('\n', '').split(' ')
@@ -77,6 +79,21 @@ def parse(out_file):
         recieved_packets1[data['seq_num']] = data['time']
       elif data['src_addr'] == '5.0':
         recieved_packets2[data['seq_num']] = data['time']
+    if data['event'] == 'r' and data['packet_type'] == 'tcp':
+      current_bytes_received = int(data['packet_size'])
+      time = float(data['time'])
+      seconds = int(str(time).split(".")[0])
+      time_interval = int(data['time'].split('.')[1][0]) + (10 * seconds)
+      if data['from_node'] == '2' and data['to_node'] == '3':
+        if time_interval in recieved_bytes1:
+          recieved_bytes1[time_interval] += current_bytes_received
+        else:
+          recieved_bytes1[time_interval] = current_bytes_received
+      elif data['from_node'] == '2' and data['to_node'] == '5':
+        if time_interval in recieved_bytes2:
+          recieved_bytes2[time_interval] += current_bytes_received
+        else:
+          recieved_bytes2[time_interval] = current_bytes_received
 
   #print recieved_packets
   #write_to_file(normalize_seq_num(sequence_numbers_received), "received1.dat")
@@ -85,10 +102,12 @@ def parse(out_file):
   write_to_file(dropped_packets2, "dropped2.dat")
   write_to_file(recieved_packets1, "sequence1.dat")
   write_to_file(recieved_packets2, "sequence2.dat")
-  write_to_file(get_latency(recieved_packets1, sent_packets1), "throughput1.dat")
-  write_to_file(get_latency(recieved_packets2, sent_packets2), "throughput2.dat")
+  write_to_file(get_latency(recieved_packets1, sent_packets1), "latency1.dat")
+  write_to_file(get_latency(recieved_packets2, sent_packets2), "latency2.dat")
+  write_to_file(normalize_time(recieved_bytes1), "throughput1.dat")
+  write_to_file(normalize_time(recieved_bytes2), "throughput2.dat")
   #write_to_file(get_latency(sequence_numbers_received, sequence_numbers_sent), "latency.dat")
-  print "Received " + str(bytes_received) + " bytes"
+  print "Received " + str(len(recieved_packets2)) + " bytes"
   #print "Throuput is " + str((bytes_received/(float(end_time)-float(start_time)))) + " bytes/second"
   print "Dropped " + str(len(dropped_packets1)) + " for TCP 1"
   print "Dropped " + str(len(dropped_packets2)) + " for TCP 2"
