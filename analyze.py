@@ -81,6 +81,7 @@ def parse(out_file):
     #  sequence_numbers_received[data['seq_num']] = data['time']
 
   #print recieved_packets
+  print sequence_numbers_received
   write_to_file(normalize_seq_num(sequence_numbers_received), "received1.dat")
   write_to_file(normalize_time(recieved_packets), "throuput3.dat")
   write_to_file(dropped_packets, "dropped.dat")
