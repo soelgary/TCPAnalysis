@@ -55,7 +55,7 @@ $ns duplex-link-op $n1 $n2 queuePos 0.5
 
 
 #Setup a TCP connection N1 -> N4 
-set tcp1 [new Agent/TCP/Vegas]
+set tcp1 [new Agent/TCP/Newreno]
 $tcp1 set class_ 2
 $ns attach-agent $n0 $tcp1
 set sink [new Agent/TCPSink]
