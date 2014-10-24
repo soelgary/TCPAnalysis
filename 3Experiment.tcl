@@ -1,7 +1,7 @@
 #Tesing Variables
 set bw 10Mb
 set delay 10ms
-set cbrSize 10Mb
+set cbrSize 9Mb
 
 #Create a simulator object
 set ns [new Simulator]
@@ -60,7 +60,7 @@ $ns duplex-link-op $n1 $n2 queuePos 0.5
 
 
 #Setup a TCP connection
-set tcp [new Agent/TCP]
+set tcp [new Agent/TCP/Sack1]
 $tcp set class_ 2
 $ns attach-agent $n0 $tcp
 set sink [new Agent/TCPSink]
@@ -71,9 +71,9 @@ $tcp set fid_ 1
 
 #Setup a UDP connection
 set udp [new Agent/UDP]
-$ns attach-agent $n1 $udp
+$ns attach-agent $n4 $udp
 set null [new Agent/Null]
-$ns attach-agent $n2 $null
+$ns attach-agent $n5 $null
 $ns connect $udp $null
 $udp set fid_ 2
 
@@ -90,13 +90,12 @@ set ftp [new Application/FTP]
 $ftp attach-agent $tcp 
 
 #Schedule events for the CBR and FTP agents
-$ns at 0.1 "$cbr start"
-$ns at 0.5 "$ftp start"
-$ns at 4.0 "$ftp stop"
-$ns at 4.5 "$cbr stop"
+$ns at 1.0 "$cbr start"
+$ns at 0.1 "$ftp start"
+$ns at 4.5 "$ftp stop"
+$ns at 4.0 "$cbr stop"
 
 #Detach tcp and sink agents (not really necessary)
-$ns at 4.5 "$ns detach-agent $n1 $tcp ; $ns detach-agent $n2 $sink"
 
 #Call the finish procedure after 5 seconds of simulation time
 $ns at 5.0 "finish"
