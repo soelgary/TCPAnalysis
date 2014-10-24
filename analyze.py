@@ -82,10 +82,10 @@ def parse(out_file):
 
   #print recieved_packets
   print sequence_numbers_received
-  write_to_file(normalize_seq_num(sequence_numbers_received), "received1.dat")
-  write_to_file(normalize_time(recieved_packets), "throuput3.dat")
-  write_to_file(dropped_packets, "dropped.dat")
-  write_to_file(get_latency(sequence_numbers_received, sequence_numbers_sent), "latency.dat")
+  write_to_file(normalize_seq_num(sequence_numbers_received), "received3.dat")
+  #write_to_file(normalize_time(recieved_packets), "throuput3.dat")
+  #write_to_file(dropped_packets, "dropped.dat")
+  #write_to_file(get_latency(sequence_numbers_received, sequence_numbers_sent), "latency3.dat")
   print "Received " + str(bytes_received) + " bytes"
   #print "Throuput is " + str((bytes_received/(float(end_time)-float(start_time)))) + " bytes/second"
   print "Dropped " + str(drops_from_1_to_2) + " packets"
