@@ -1,24 +1,24 @@
 set terminal png
 
-set title 'Throughput For TCP Vegas With 9Mb'
+set title 'Throughput For TCP Sack Using Tail Queueing'
 set ylabel 'Bytes Received'
 set xlabel 'Time(s)'
 set output 'throughput.png'
 plot "throuput3.dat" with line
 
-set title 'Latency For TCP Vegas With 9Mb'
+set title 'Latency For TCP Sack Using Tail Queueing'
 set ylabel 'Delay(s)'
 set xlabel 'Sequence Number'
 set output "latency.png"
 plot "latency.dat" with line
 
-set title 'Recieved Sequence Numbers For TCP Vegas With 9Mb'
+set title 'Recieved Sequence Numbers For TCP Sack Using Tail Queueing'
 set xlabel 'Time(s)'
 set ylabel 'Sequence Number'
 set output 'sequence.png'
 plot "received1.dat"
 
-set title 'Dropped Packets For TCP Vegas With 9Mb'
+set title 'Dropped Packets For TCP Sack Using Tail Queueing'
 set ylabel 'Bytes Dropped'
 set xlabel 'Time(s)'
 set output 'dropped.png'

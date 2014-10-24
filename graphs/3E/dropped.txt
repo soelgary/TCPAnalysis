@@ -1,4 +1,4 @@
-New Reno = 15
-Reno = 14
-Tahoe = 15
-Vegas = 9
+Reno Red = 15
+Reno Tail = 14
+Sack Red = 14
+Sack Tail = 13
