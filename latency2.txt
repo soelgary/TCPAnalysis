@@ -1,0 +1,8 @@
+set terminal png
+
+set title 'Throughput For TCP Reno vs Reno With 9Mb'
+set ylabel 'Bytes Received'
+set xlabel 'Time(s)'
+set output 'throughput.png'
+plot "throughput1.dat" using 1:2 with line title "Reno From Node 0", \
+	"throughput2.dat" using 1:2 with line title "Reno From Node 4"

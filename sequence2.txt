@@ -1,0 +1,8 @@
+set terminal png
+
+set title 'Recieved Sequence Numbers For TCP Reno vs Reno With 9Mb'
+set xlabel 'Time(s)'
+set ylabel 'Sequence Number'
+set output 'sequence.png'
+plot "sequence1.dat" using 1:2 title "Reno from Node 0", \
+	"sequence2.dat" using 1:2 title "Reno from Node 4"

@@ -1,25 +1,25 @@
 set terminal png
 
-set title 'Throughput'
+set title 'Throughput For TCP Tahoe With 10Mb'
 set ylabel 'Bytes Received'
 set xlabel 'Time(s)'
 set output 'throughput.png'
 plot "throuput.dat" with line
 
-set title 'Latency'
+set title 'Latency For TCP Tahoe With 10Mb'
 set ylabel 'Delay(s)'
 set xlabel 'Sequence Number'
 set output "latency.png"
 plot "latency.dat" with line
 
-set title 'Dropped Packets'
-set ylabel 'Packets Dropped'
-set xlabel 'Time(s)'
-set output 'dropped.png'
-plot "dropped.dat"
-
-set title 'Recieved Sequence Numbers'
+set title 'Recieved Sequence Numbers For TCP Tahoe With 10Mb'
 set xlabel 'Time(s)'
 set ylabel 'Sequence Number'
 set output 'sequence.png'
 plot "received.dat"
+
+set title 'Dropped Packets For TCP Tahoe With 10Mb'
+set ylabel 'Bytes Dropped'
+set xlabel 'Time(s)'
+set output 'dropped.png'
+plot "dropped.dat"
