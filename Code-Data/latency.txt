@@ -1,9 +1,9 @@
 set term png
-set title 'Latency For TCP With 10Mb'
+set title 'Latency For TCP With Different Queueing Algorithms'
 set ylabel 'RTT(s)'
 set xlabel 'Sequence Number'
-set output "latency10Mb.png"
-plot "latency.dat" using 1:2 with line title "Reno", \
-  "latency1.dat" using 1:2 with line title "New Reno", \
-  "latency2.dat" using 1:2 with line title "Tahoe", \
-  "latency3.dat" using 1:2 with line title "Vegas"
+set output "latency.png"
+plot "latency.dat" using 1:2 with line title "Reno RED", \
+  "latency1.dat" using 1:2 with line title "Reno Tail", \
+  "latency2.dat" using 1:2 with line title "SACK RED", \
+  "latency3.dat" using 1:2 with line title "SACK Tail"

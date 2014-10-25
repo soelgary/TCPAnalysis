@@ -1,10 +1,10 @@
 set terminal png
 
-set title 'Throughput For TCP Tahoe With 9Mb'
+set title 'Throughput For TCP With Different Queues'
 set ylabel 'Bytes Received'
 set xlabel 'Time(s)'
 set output 'throughput.png'
-plot "throuput.dat" using 1:2 with line title "Reno", \
-  "throuput1.dat" using 1:2 with line title "New Reno", \
-  "throuput2.dat" using 1:2 with line title "Tahoe", \
-  "throuput3.dat" using 1:2 with line title "Vegas"
+plot "throuput.dat" using 1:2 with line title "Reno RED", \
+  "throuput1.dat" using 1:2 with line title "Reno Tail", \
+  "throuput2.dat" using 1:2 with line title "SACK RED", \
+  "throuput3.dat" using 1:2 with line title "SACK Tail"
