@@ -1,11 +1,4 @@
-TCP Analysis
-===========
+For this project we first learned about NS-2 together. We then decided to split up the work a little bit and have one of us work on the parser while the other one works on creating and running the experiments. After we had the experiments running and the parsers working we decided on gnuplot to create graphs. The parsers simply outputed x/y column values into text files that we piped into gnuplot scripts to create the graphs. After we started to create the graphs we simoultaneously worked on the paper filling in blanks when we could. Eventually all of the graphs were done and we just concentrated on the paper until its completion. 
 
-Project 3 for Network Fundamentals
+We put all of the code and data in the Code-Data folder and the paper is in the same directory as this readme and is called paper.pdf.
 
-
-TCP Agent Variables:
-    Agent/TCP - Tahoe
-    Agent/TCP/Reno - Reno
-    Agent/TCP/Newreno - New Reno
-    Agnet/TCP/Vegas - Vegas
